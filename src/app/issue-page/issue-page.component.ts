@@ -1,6 +1,6 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component } from '@angular/core';
 import { Issue } from '../model/issue';
-import { BehaviorSubject, Observable, Subject, map } from 'rxjs';
+import { Observable } from 'rxjs';
 import { IssueService } from '../issue.service';
 
 @Component({
@@ -11,6 +11,7 @@ import { IssueService } from '../issue.service';
 export class IssuePageComponent {
   filters: { type: string; criteria: string; value: string }[] = [];
 
+  // This will just complete with initial empty filters
   issues$: Observable<Issue[]> = this.issueService.getIssues(this.filters);
 
   constructor(private issueService: IssueService) {}

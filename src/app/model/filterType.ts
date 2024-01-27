@@ -1,7 +1,3 @@
-import { TemplateRef } from '@angular/core';
-import { Status } from './issue';
-import { User } from './user';
-
 export interface FilterType {
   /**
    * The type of the filter

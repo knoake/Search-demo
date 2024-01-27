@@ -58,16 +58,11 @@ export class FilterComponent {
     newFilter: { type: string; criteria: string; value: string },
     index: number
   ) {
-    console.log('value', this.currentFiltersValue);
-    console.log('index', index);
     if (this.currentFiltersValue[index]) {
-      console.log('i exist');
       this.currentFiltersValue.splice(index, 1, newFilter);
     } else {
-      console.log('i pushed');
       this.currentFiltersValue.push(newFilter);
     }
-    console.log('value', this.currentFiltersValue);
     this.filters.emit(this.currentFiltersValue);
   }
 
@@ -84,7 +79,5 @@ export class FilterComponent {
       this.currentFiltersValue.splice(index, 1);
     }
     this.filters.emit(this.currentFiltersValue);
-    console.log('current', this.currentFilters);
-    console.log('value', this.currentFiltersValue);
   }
 }
