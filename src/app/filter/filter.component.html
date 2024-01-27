@@ -1,0 +1,86 @@
+<!-- <mat-chip-listbox>
+  <ng-container *ngFor="let savedFilter of savedFilters">
+    <mat-chip-option
+      (selectionChange)="applySavedFilter($event, savedFilter.filter)"
+      >{{ savedFilter.name }}
+      <button matChipRemove>
+        <mat-icon>cancel</mat-icon>
+      </button></mat-chip-option
+    >
+  </ng-container>
+</mat-chip-listbox>
+
+<form [formGroup]="form">
+  <div>
+    <mat-form-field class="field">
+      <mat-label>Assignee</mat-label>
+      <mat-select
+        formControlName="assignee"
+        (selectionChange)="filterIssues($event, 'assignee')"
+      >
+        <mat-option *ngFor="let user of users" [value]="user.name">
+          {{ user.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="field">
+      <mat-label>Creator</mat-label>
+      <mat-select
+        formControlName="creator"
+        (selectionChange)="filterIssues($event, 'creator')"
+      >
+        <mat-option *ngFor="let user of users" [value]="user.name">
+          {{ user.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button mat-button [matMenuTriggerFor]="menu">More filters</button>
+    <mat-menu #menu="matMenu">
+      <ng-container *ngFor="let filterType of additionalFilterTypes">
+        <button mat-menu-item (click)="(openInput)">
+          {{ filterType.name }}
+        </button>
+      </ng-container>
+    </mat-menu>
+  </div>
+</form>
+<div *ngIf="activeFilter" class="flex">
+  <h4>
+    Current filter:
+    <ng-container *ngFor="let filter of this.form.value | keyvalue">
+      <span *ngIf="filter.value !== null"
+        >{{ filter.key }}: {{ filter.value }},
+      </span>
+    </ng-container>
+  </h4>
+  <button mat-icon-button (click)="clearFilter()" color="primary">
+    <mat-icon>close</mat-icon>
+  </button>
+  <button mat-icon-button (click)="saveFilter()" color="primary">
+    <mat-icon>star</mat-icon>
+  </button>
+</div> -->
+
+<button mat-button [matMenuTriggerFor]="menu">Add filter</button>
+<mat-menu #menu="matMenu">
+  <ng-container *ngFor="let filterType of availableFilterTypes">
+    <button mat-menu-item (click)="addFilterInput(filterType)">
+      {{ filterType.displayName }}
+    </button>
+  </ng-container>
+</mat-menu>
+<button mat-button (click)="clearFilters()">Clear all</button>
+
+<!-- ngfor components of components -->
+<div class="flex wrap">
+  <div *ngFor="let filter of currentFilters; index as i" class="flex filter">
+    <app-filter-single
+      [index]="i"
+      [newFilterType]="filter"
+      (filters)="updateFilters($event, i)"
+    ></app-filter-single>
+    <button mat-icon-button (click)="removeSingleFilter(i)">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+</div>

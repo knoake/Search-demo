@@ -1,0 +1,86 @@
+<!-- This needs breaking down into multiple components for each type of input
+ -->
+<form [formGroup]="form">
+  <div *ngIf="this.newFilterType.inputType === 'user'" class="flex">
+    <p class="margin">{{ this.newFilterType.displayName }}</p>
+    <mat-form-field class="narrow">
+      <mat-label>Criteria</mat-label>
+      <mat-select
+        formControlName="criteria"
+        (selectionChange)="filterIssuesSelect($event)"
+      >
+        <mat-option *ngFor="let criteria of criterias" [value]="criteria">
+          {{ criteria }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="standard">
+      <mat-label>{{ this.newFilterType.displayName }}</mat-label>
+      <mat-select
+        formControlName="selectedFilterValue"
+        (selectionChange)="filterIssuesSelect($event)"
+        required
+      >
+        <ng-container *ngIf="users$ | async as users">
+          <mat-option *ngFor="let user of users" [value]="user.id">
+            {{ user.name }}
+          </mat-option>
+        </ng-container>
+      </mat-select>
+      <mat-error *ngIf="form.controls.selectedFilterValue.hasError('required')"
+        >Please select a value</mat-error
+      >
+    </mat-form-field>
+  </div>
+
+  <div *ngIf="this.newFilterType.inputType === 'single-select'" class="flex">
+    <p class="margin">{{ this.newFilterType.displayName }}</p>
+    <mat-form-field class="narrow">
+      <mat-label>Criteria</mat-label>
+      <mat-select
+        formControlName="criteria"
+        (selectionChange)="filterIssuesSelect($event)"
+      >
+        <mat-option *ngFor="let criteria of criterias" [value]="criteria">
+          {{ criteria }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="standard">
+      <mat-label>{{ this.newFilterType.displayName }}</mat-label>
+      <mat-select
+        formControlName="selectedFilterValue"
+        (selectionChange)="filterIssuesSelect($event)"
+        required
+      >
+        <mat-option *ngFor="let value of values" [value]="value">
+          {{ value }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="form.controls.selectedFilterValue.hasError('required')"
+        >Please select a value</mat-error
+      >
+    </mat-form-field>
+  </div>
+
+  <div *ngIf="this.newFilterType.inputType === 'text'">
+    <form [formGroup]="form">
+      <mat-form-field class="standard">
+        <input
+          type="text"
+          matInput
+          placeholder="Search"
+          #searchInput
+          (input)="search()"
+          formControlName="selectedFilterValue"
+        />
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
+    </form>
+  </div>
+
+  <div *ngIf="this.newFilterType.inputType === 'date'">
+    Add date picker
+    <!--  Add date picker for creation and due date -->
+  </div>
+</form>

@@ -1,0 +1,5 @@
+<mat-list>
+  <mat-list-item *ngFor="let issue of issues" (click)="select(issue)">
+    <span matListItemLine>{{ issue.title }}</span>
+  </mat-list-item>
+</mat-list>

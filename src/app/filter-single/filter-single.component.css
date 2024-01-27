@@ -1,0 +1,16 @@
+.narrow {
+  width: 100px;
+}
+
+.standard {
+  width: 150px;
+}
+
+.flex {
+  display: flex;
+  align-items: center;
+}
+
+.margin {
+  margin-right: 8px;
+}

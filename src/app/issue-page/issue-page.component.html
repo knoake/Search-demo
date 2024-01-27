@@ -1,0 +1,17 @@
+<!-- <app-blar></app-blar> -->
+
+<app-filter (filters)="filterIssues($event)"></app-filter>
+
+<ng-container *ngIf="issues$ | async as issues">
+  <h2>Issues</h2>
+
+  <h4>Current Filters to be sent to the issue service:</h4>
+
+  <ng-container *ngFor="let filter of this.filters">
+    {{ filter.type }} {{ filter.criteria }} {{ filter.value }},
+  </ng-container>
+  <app-issue-list
+    [issues]="issues"
+    (selected)="selected($event)"
+  ></app-issue-list>
+</ng-container>
