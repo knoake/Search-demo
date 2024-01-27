@@ -3,7 +3,7 @@
 <form [formGroup]="form">
   <div *ngIf="this.newFilterType.inputType === 'user'" class="flex">
     <p class="margin">{{ this.newFilterType.displayName }}</p>
-    <mat-form-field class="narrow">
+    <mat-form-field class="narrow margin">
       <mat-label>Criteria</mat-label>
       <mat-select
         formControlName="criteria"
