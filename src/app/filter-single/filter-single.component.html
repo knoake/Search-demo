@@ -1,6 +1,6 @@
 <!-- This needs breaking down into multiple components for each type of input
  -->
-<div class="flex">
+<div class="flex" *ngIf="this.newFilterType.inputType !== 'text'">
   <button mat-stroked-button disabled>
     {{ this.newFilterType.displayName }}
   </button>
