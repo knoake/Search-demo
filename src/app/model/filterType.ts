@@ -12,7 +12,24 @@ export interface FilterType {
   /**
    * Type of input to use in the UI
    */
-  inputType: string;
+  inputType: InputType;
 }
 
-export type InputType = 'Select' | 'Date' | 'Text';
+export interface FilterValue {
+  /**
+   * The type of the filter
+   */
+  key: string;
+
+  /**
+   * Search criteria for the type
+   */
+  criteria: string;
+
+  /**
+   * Value of input
+   */
+  value: InputType;
+}
+
+export type InputType = 'user' | 'single-select' | 'date' | 'text';

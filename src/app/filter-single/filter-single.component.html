@@ -1,71 +1,62 @@
 <!-- This needs breaking down into multiple components for each type of input
  -->
+<div class="flex">
+  <button mat-stroked-button disabled>
+    {{ this.newFilterType.displayName }}
+  </button>
+  <button mat-stroked-button [matMenuTriggerFor]="criteriaMenu">
+    {{ this.form.controls.criteria.value }}
+  </button>
+  <button
+    mat-stroked-button
+    *ngIf="this.newFilterType.inputType === 'user'"
+    [matMenuTriggerFor]="userMenu"
+  >
+    {{ this.form.controls.selectedFilterValue.value || "Select" }}
+  </button>
+  <button
+    mat-stroked-button
+    *ngIf="this.newFilterType.inputType === 'single-select'"
+    [matMenuTriggerFor]="singleSelectMenu"
+  >
+    {{ this.form.controls.selectedFilterValue.value || "Select" }}
+  </button>
+</div>
+
+<mat-menu #criteriaMenu>
+  <button
+    mat-menu-item
+    *ngFor="let criteria of criterias"
+    (click)="changeCriteria(criteria)"
+  >
+    {{ criteria }}
+  </button>
+</mat-menu>
+<mat-menu #userMenu>
+  <ng-container *ngIf="users$ | async as users">
+    <button
+      mat-menu-item
+      *ngFor="let user of users"
+      (click)="changeValue(user.id)"
+    >
+      {{ user.name }}
+    </button>
+  </ng-container>
+</mat-menu>
+<mat-menu #singleSelectMenu>
+  <button
+    mat-menu-item
+    *ngFor="let value of values"
+    (click)="changeValue(value)"
+  >
+    {{ value }}
+  </button>
+</mat-menu>
+
 <form [formGroup]="form">
-  <div *ngIf="this.newFilterType.inputType === 'user'" class="flex">
-    <p class="margin">{{ this.newFilterType.displayName }}</p>
-    <mat-form-field class="narrow margin">
-      <mat-label>Criteria</mat-label>
-      <mat-select
-        formControlName="criteria"
-        (selectionChange)="filterIssuesSelect($event)"
-      >
-        <mat-option *ngFor="let criteria of criterias" [value]="criteria">
-          {{ criteria }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-    <mat-form-field class="standard">
-      <mat-label>{{ this.newFilterType.displayName }}</mat-label>
-      <mat-select
-        formControlName="selectedFilterValue"
-        (selectionChange)="filterIssuesSelect($event)"
-        required
-      >
-        <ng-container *ngIf="users$ | async as users">
-          <mat-option *ngFor="let user of users" [value]="user.id">
-            {{ user.name }}
-          </mat-option>
-        </ng-container>
-      </mat-select>
-      <mat-error *ngIf="form.controls.selectedFilterValue.hasError('required')"
-        >Please select a value</mat-error
-      >
-    </mat-form-field>
-  </div>
-
-  <div *ngIf="this.newFilterType.inputType === 'single-select'" class="flex">
-    <p class="margin">{{ this.newFilterType.displayName }}</p>
-    <mat-form-field class="narrow">
-      <mat-label>Criteria</mat-label>
-      <mat-select
-        formControlName="criteria"
-        (selectionChange)="filterIssuesSelect($event)"
-      >
-        <mat-option *ngFor="let criteria of criterias" [value]="criteria">
-          {{ criteria }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-    <mat-form-field class="standard">
-      <mat-label>{{ this.newFilterType.displayName }}</mat-label>
-      <mat-select
-        formControlName="selectedFilterValue"
-        (selectionChange)="filterIssuesSelect($event)"
-        required
-      >
-        <mat-option *ngFor="let value of values" [value]="value">
-          {{ value }}
-        </mat-option>
-      </mat-select>
-      <mat-error *ngIf="form.controls.selectedFilterValue.hasError('required')"
-        >Please select a value</mat-error
-      >
-    </mat-form-field>
-  </div>
-
   <div *ngIf="this.newFilterType.inputType === 'text'">
     <form [formGroup]="form">
-      <mat-form-field class="standard">
+      <mat-form-field class="standard" appearance="outline">
         <input
           type="text"
           matInput
@@ -77,10 +68,5 @@
         <mat-icon matSuffix>search</mat-icon>
       </mat-form-field>
     </form>
-  </div>
-
-  <div *ngIf="this.newFilterType.inputType === 'date'">
-    Add date picker
-    <!--  Add date picker for creation and due date -->
   </div>
 </form>

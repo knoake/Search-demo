@@ -41,8 +41,21 @@ export class FilterSingleComponent {
   constructor(private userService: UserService) {}
 
   //Output the filter criteria and value if there is a value
-  filterIssuesSelect(event: MatSelectChange) {
+  changeCriteria(criteria: string) {
     // emit something has changed
+    this.form.controls.criteria.setValue(criteria);
+    if (this.form.valid) {
+      this.filters.emit({
+        type: this.newFilterType.key,
+        criteria: this.form.controls.criteria.value!,
+        value: this.form.controls.selectedFilterValue.value,
+      });
+    }
+  }
+
+  changeValue(value: string) {
+    // emit something has changed
+    this.form.controls.selectedFilterValue.setValue(value);
     if (this.form.valid) {
       this.filters.emit({
         type: this.newFilterType.key,

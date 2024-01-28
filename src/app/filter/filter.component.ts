@@ -31,11 +31,6 @@ export class FilterComponent {
       inputType: 'single-select',
     },
     {
-      key: 'dueDate',
-      displayName: 'Due date',
-      inputType: 'date',
-    },
-    {
       key: 'search',
       displayName: 'Search',
       inputType: 'text',

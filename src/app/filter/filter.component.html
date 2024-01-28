@@ -1,25 +1,60 @@
-<button mat-stroked-button class="margin" [matMenuTriggerFor]="menu">
-  Add filter
-</button>
-<mat-menu #menu="matMenu">
-  <ng-container *ngFor="let filterType of availableFilterTypes">
-    <button mat-menu-item (click)="addFilterInput(filterType)">
-      {{ filterType.displayName }}
-    </button>
-  </ng-container>
-</mat-menu>
-<button mat-stroked-button (click)="clearFilters()">Clear all</button>
-
 <!-- ngfor components of components -->
-<div class="flex wrap margin-top">
-  <div *ngFor="let filter of currentFilters; index as i" class="flex filter">
+<div class="flex wrap margin-top filter">
+  <div *ngFor="let filter of currentFilters; index as i" class="flex">
     <app-filter-single
       [index]="i"
       [newFilterType]="filter"
       (filters)="updateFilters($event, i)"
     ></app-filter-single>
-    <button mat-icon-button (click)="removeSingleFilter(i)">
+    <button mat-stroked-button (click)="removeSingleFilter(i)">
       <mat-icon>close</mat-icon>
     </button>
   </div>
+  <div *ngIf="!this.currentFilters.length; else add">
+    <button
+      mat-stroked-button
+      class="margin"
+      (click)="addFilterInput(    {
+      key: 'search',
+      displayName: 'Search',
+      inputType: 'text',
+    })"
+    >
+      Search
+    </button>
+    <button
+      mat-stroked-button
+      class="margin"
+      (click)="addFilterInput(    {
+      key: 'assignee',
+      displayName: 'Assignee',
+      inputType: 'user',
+    })"
+    >
+      Assignee
+    </button>
+    <button mat-stroked-button class="margin" [matMenuTriggerFor]="menu">
+      More filters
+    </button>
+  </div>
+  <ng-template #add>
+    <button
+      mat-stroked-button
+      *ngIf="this.currentFilters.length === this.currentFiltersValue.length"
+      class="margin"
+      [matMenuTriggerFor]="menu"
+    >
+      Add
+    </button>
+  </ng-template>
+
+  <mat-menu #menu="matMenu">
+    <ng-container *ngFor="let filterType of availableFilterTypes">
+      <button mat-menu-item (click)="addFilterInput(filterType)">
+        {{ filterType.displayName }}
+      </button>
+    </ng-container>
+  </mat-menu>
 </div>
+
+<button mat-stroked-button (click)="clearFilters()">Clear all</button>
