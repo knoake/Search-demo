@@ -37,6 +37,8 @@ export class FilterComponent {
     },
   ];
 
+  savedFilters = ['Assigned to me', 'Due this month'];
+
   currentFilters: FilterType[] = [];
   currentFiltersValue: { type: string; criteria: string; value: string }[] = [];
 

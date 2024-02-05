@@ -1,60 +1,84 @@
 <!-- ngfor components of components -->
-<div class="flex wrap margin-top filter">
-  <div *ngFor="let filter of currentFilters; index as i" class="flex">
-    <app-filter-single
-      [index]="i"
-      [newFilterType]="filter"
-      (filters)="updateFilters($event, i)"
-    ></app-filter-single>
-    <button mat-stroked-button (click)="removeSingleFilter(i)">
-      <mat-icon>close</mat-icon>
-    </button>
-  </div>
-  <div *ngIf="!this.currentFilters.length; else add">
-    <button
-      mat-stroked-button
-      class="margin"
-      (click)="addFilterInput(    {
+<div class="flex">
+  <p class="filter-label">Filters</p>
+  <div class="flex flex1 wrap filter-container padding4 margin-right">
+    <div
+      *ngFor="let filter of currentFilters; index as i"
+      class="flex filter grey-background margin-right"
+    >
+      <app-filter-single
+        [index]="i"
+        [newFilterType]="filter"
+        (filters)="updateFilters($event, i)"
+      ></app-filter-single>
+      <mat-icon class="close-button" (click)="removeSingleFilter(i)"
+        >close</mat-icon
+      >
+    </div>
+    <div *ngIf="!this.currentFilters.length; else add">
+      <button
+        mat-stroked-button
+        class="margin-right"
+        (click)="addFilterInput(    {
       key: 'search',
       displayName: 'Search',
       inputType: 'text',
     })"
-    >
-      Search
-    </button>
-    <button
-      mat-stroked-button
-      class="margin"
-      (click)="addFilterInput(    {
+      >
+        Search
+      </button>
+      <button
+        mat-stroked-button
+        class="margin-right"
+        (click)="addFilterInput(    {
       key: 'assignee',
       displayName: 'Assignee',
       inputType: 'user',
     })"
-    >
-      Assignee
-    </button>
-    <button mat-stroked-button class="margin" [matMenuTriggerFor]="menu">
-      More filters
-    </button>
-  </div>
-  <ng-template #add>
-    <button
-      mat-stroked-button
-      *ngIf="this.currentFilters.length === this.currentFiltersValue.length"
-      class="margin"
-      [matMenuTriggerFor]="menu"
-    >
-      Add
-    </button>
-  </ng-template>
-
-  <mat-menu #menu="matMenu">
-    <ng-container *ngFor="let filterType of availableFilterTypes">
-      <button mat-menu-item (click)="addFilterInput(filterType)">
-        {{ filterType.displayName }}
+      >
+        Assignee
       </button>
-    </ng-container>
-  </mat-menu>
-</div>
+      <button
+        mat-stroked-button
+        class="margin-right"
+        [matMenuTriggerFor]="menu"
+      >
+        More filters
+      </button>
+    </div>
+    <ng-template #add>
+      <button
+        mat-button
+        *ngIf="this.currentFilters.length === this.currentFiltersValue.length"
+        class="margin-left"
+        [matMenuTriggerFor]="menu"
+      >
+        Add
+      </button>
+    </ng-template>
 
-<button mat-stroked-button (click)="clearFilters()">Clear all</button>
+    <mat-menu #menu="matMenu">
+      <ng-container *ngFor="let filterType of availableFilterTypes">
+        <button mat-menu-item (click)="addFilterInput(filterType)">
+          {{ filterType.displayName }}
+        </button>
+      </ng-container>
+    </mat-menu>
+    <mat-menu #savedFilterMenu="matMenu">
+      <ng-container *ngFor="let filterType of savedFilters">
+        <button mat-menu-item>
+          {{ filterType }}
+        </button>
+      </ng-container>
+    </mat-menu>
+  </div>
+  <button mat-flat-button color="primary">New issue</button>
+</div>
+<button
+  mat-button
+  *ngIf="this.currentFilters.length"
+  color="primary"
+  (click)="clearFilters()"
+>
+  Clear filters
+</button>

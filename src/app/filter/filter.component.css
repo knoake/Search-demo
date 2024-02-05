@@ -1,14 +1,26 @@
-.margin {
+.margin-right {
   margin-right: 8px;
+}
+
+.margin-left {
+  margin-left: 8px;
 }
 
 .margin-top {
   margin-top: 16px;
 }
 
+.filter-label {
+  margin-right: 8px;
+  margin-bottom: 0;
+}
 .flex {
   display: flex;
   align-items: center;
+}
+
+.flex1 {
+  flex: 1;
 }
 
 .wrap {
@@ -19,10 +31,27 @@ h4 {
   margin: 0;
 }
 
-.filter {
+.filter-container {
   border-style: solid;
   border-radius: 4px;
   border-width: 1px;
-  padding: 4px;
   border-color: lightgray;
+}
+
+.filter {
+  border-radius: 16px;
+}
+
+.padding4 {
+  padding: 4px;
+}
+
+.close-button:hover {
+  cursor: pointer;
+}
+
+.close-button {
+  margin-right: 6px;
+  height: 20px;
+  font-size: 20px;
 }

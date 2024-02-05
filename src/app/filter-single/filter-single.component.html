@@ -1,21 +1,24 @@
 <!-- This needs breaking down into multiple components for each type of input
  -->
-<div class="flex" *ngIf="this.newFilterType.inputType !== 'text'">
-  <button mat-stroked-button disabled>
+<div
+  class="flex filter-container"
+  *ngIf="this.newFilterType.inputType !== 'text'"
+>
+  <button mat-button disabled>
     {{ this.newFilterType.displayName }}
   </button>
-  <button mat-stroked-button [matMenuTriggerFor]="criteriaMenu">
+  <button mat-button [matMenuTriggerFor]="criteriaMenu">
     {{ this.form.controls.criteria.value }}
   </button>
   <button
-    mat-stroked-button
+    mat-button
     *ngIf="this.newFilterType.inputType === 'user'"
     [matMenuTriggerFor]="userMenu"
   >
     {{ this.form.controls.selectedFilterValue.value || "Select" }}
   </button>
   <button
-    mat-stroked-button
+    mat-button
     *ngIf="this.newFilterType.inputType === 'single-select'"
     [matMenuTriggerFor]="singleSelectMenu"
   >
