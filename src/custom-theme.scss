@@ -1,0 +1,180 @@
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@use "@angular/material" as mat;
+@use "sass:map";
+@use "sass:color";
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat.legacy-core();
+
+@mixin component-theme($theme) {
+  // Extract whichever individual palettes you need from the theme.
+  $color-config: mat.get-color-config($theme);
+
+  $primary: map.get($color-config, primary);
+  $accent: map.get($color-config, accent);
+  $background: map.get($color-config, background);
+  $foreground: map.get($color-config, foreground);
+
+  .grey {
+    color: mat.get-color-from-palette($foreground, icons);
+  }
+
+  .grey-background {
+    background-color: mat.get-color-from-palette($background, status-bar);
+  }
+
+  .primary {
+    color: mat.get-color-from-palette($primary);
+  }
+
+  .primary-contrast {
+    color: mat.get-color-from-palette($primary, "500-contrast") !important;
+  }
+
+  .primary-background {
+    background-color: mat.get-color-from-palette($primary);
+  }
+}
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+
+//The same colour is used throughout due to time constraint
+$custom: (
+  50: #e0f7fa,
+  100: #b2ebf2,
+  200: #80deea,
+  300: #4dd0e1,
+  400: #26c6da,
+  500: #00bcd4,
+  600: #00acc1,
+  700: #0097a7,
+  800: #00838f,
+  900: #006064,
+  contrast: (
+    50: rgba(black, 0.87),
+    100: rgba(black, 0.87),
+    200: rgba(black, 0.87),
+    300: white,
+    400: white,
+    500: white,
+    600: white,
+    700: white,
+    800: white,
+    900: white,
+  ),
+);
+//$login: mat.$custom;
+$filter-primary: mat.define-palette($custom, 500);
+$filter-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+// The warn palette is optional (defaults to red).
+$filter-warn: mat.define-palette(mat.$red-palette);
+
+$filter-typography: mat.define-typography-config(
+  $headline-3: (
+    font-size: 6rem,
+    font-weight: 300,
+    line-height: 6rem,
+  ),
+  $headline-4: (
+    font-size: clamp(2rem, 3.75rem, 8vw),
+    font-weight: 400,
+    line-height: 1.4,
+    font-family: 'Roboto, "Helvetica Neue", sans-serif',
+  ),
+  /* Corresponds to the <h1> tag*/ $headline-5:
+    (
+      font-size: clamp(1.75rem, 2.5rem, 7vw),
+      font-weight: 300,
+      line-height: 1.4,
+    ),
+  /* Corresponds to the <h2> tag*/ $headline-6:
+    (
+      font-size: clamp(1.5rem, 2.125rem, 5vw),
+      font-weight: 400,
+      line-height: 1.4,
+    ),
+  /*   Previously subheading 2
+    Documentation states it should be <h3> tag*/
+    $subtitle-1:
+    (
+      font-size: 1.25rem,
+      font-weight: 400,
+      line-height: 1.4,
+    ),
+  /*  Previously subheading 1. 
+  This corresponds to <h4> tag (it and also wherever body-1 is used, e.g. form field labels.
+  Documentation states it should be paragraph body text
+  */
+    /*   $body-1:(
+    font-size: 1.25rem,
+    font-weight: 400,
+    line-height: 1.4,
+  ),  */
+    /*    Previously body 1
+  This corresponds to <p> tag, it shouldnt. 
+  Documentation states it should be bold text*/
+    $body-2:
+    (
+      font-size: 1rem,
+      font-weight: 400,
+      line-height: 1.25,
+    ),
+  /*   Previously body-2
+  This should correspond to <h4> tag, not used anywhere */
+    $subtitle-2:
+    (
+      font-size: 1rem,
+      font-weight: 500,
+      line-height: 1.4,
+    ),
+  $caption: (
+    font-size: 12,
+  ),
+);
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as "color" or "typography".
+$filter-theme: mat.define-light-theme(
+  (
+    color: (
+      primary: $filter-primary,
+      accent: $filter-accent,
+      warn: $filter-warn,
+    ),
+    typography: $filter-typography,
+  )
+);
+
+//define a dark theme
+$dark-filter-theme: mat.define-dark-theme(
+  (
+    color: (
+      primary: $filter-primary,
+      accent: $filter-accent,
+      warn: $filter-warn,
+    ),
+    typography: $filter-typography,
+  )
+);
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+
+//default light theme
+@include mat.all-component-themes($filter-theme);
+@include component-theme($filter-theme);
+@include mat.all-component-typographies($filter-typography);
+
+// Include the dark color styles.
+@media (prefers-color-scheme: dark) {
+  // Apply the dark theme
+  @include mat.all-component-colors($dark-filter-theme);
+  @include component-theme($dark-filter-theme);
+}
