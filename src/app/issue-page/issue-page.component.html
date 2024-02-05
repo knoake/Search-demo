@@ -5,14 +5,13 @@
 </div>
 <ng-container *ngIf="issues$ | async as issues">
   <h2>Issues</h2>
+  <h4 class="grey">
+    Current filters being sent to the issue service:
 
-  <h4>
-    Current Filters to be sent to the issue service:
     <span *ngFor="let filter of this.filters">
       {{ filter.type }} {{ filter.criteria }} {{ filter.value }},
     </span>
   </h4>
-
   <app-issue-list
     [issues]="issues"
     (selected)="selected($event)"
